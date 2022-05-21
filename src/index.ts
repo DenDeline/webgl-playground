@@ -38,6 +38,24 @@ function createProgram(gl: WebGL2RenderingContext, vertexShader: WebGLShader, fr
   return null;
 }
 
+function resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
+  const dpr = window.devicePixelRatio;
+  const displayWidth  = Math.round(canvas.clientWidth * dpr);
+  const displayHeight = Math.round(canvas.clientHeight * dpr);
+ 
+  // Check if the canvas is not the same size.
+  const needResize = canvas.width  !== displayWidth ||
+                     canvas.height !== displayHeight;
+ 
+  if (needResize) {
+    // Make the canvas the same size
+    canvas.width  = displayWidth;
+    canvas.height = displayHeight;
+  }
+ 
+  return needResize;
+}
+
 function main() {
   // Get A WebGL context
   const canvas = document.createElement('canvas')
@@ -90,6 +108,7 @@ function main() {
   const offset = 0
   gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
 
+  resizeCanvasToDisplaySize(gl.canvas)
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
   gl.clearColor(0, 0, 0, 0)
   gl.clear(gl.COLOR_BUFFER_BIT)

@@ -10,7 +10,8 @@ const webpackConfig = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    clean: true
+    clean: true,
+    publicPath: "/webgl-playground/"
   },
   plugins: [
     new HtmlWebpackPlugin({
